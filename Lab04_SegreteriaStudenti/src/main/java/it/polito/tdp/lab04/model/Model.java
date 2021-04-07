@@ -30,4 +30,11 @@ public class Model {
 	public List<Studente> getStudentiIscrittiAlCorso(String codins){
 		return corsodao.getStudentiIscrittiAlCorso(new Corso(codins, null, null, null));
 	}
+	
+	public List<Corso> getCorsiOfStudenti(Integer matricola){
+		return studentedao.getCorsiOfStudenti(new Studente(matricola, null, null, null));
+	}
+	public boolean esisteMatricola(Integer matricola) {
+		return studentedao.esisteMatricola(new Studente (matricola, null, null, null));
+	}
 }

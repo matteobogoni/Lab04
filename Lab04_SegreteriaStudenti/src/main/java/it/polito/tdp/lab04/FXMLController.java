@@ -4,11 +4,11 @@
 package it.polito.tdp.lab04;
 
 import java.net.URL;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.ResourceBundle;
 
-import it.polito.tdp.lab04.DAO.CorsoDAO;
+
 import it.polito.tdp.lab04.model.Corso;
 import it.polito.tdp.lab04.model.Model;
 import it.polito.tdp.lab04.model.Studente;
@@ -62,7 +62,36 @@ public class FXMLController {
 
     @FXML
     void doCercaCorsi(ActionEvent event) {
-    
+    	txtRisultato.clear();
+    	
+    	String matr = txtMatricola.getText();
+    	Integer matricola;
+    	
+    	if(matr.length() == 0) {
+    		txtRisultato.setText("Devi inserire una matricola!");
+    		return;
+    	}
+    	try {
+    		matricola = Integer.parseInt(matr);
+    	}catch(NumberFormatException ne) {
+    		txtRisultato.setText("Devi inserire un numero");
+    		return;
+    	}
+    	if(!model.esisteMatricola(matricola)) {
+    		txtRisultato.setText("La matricola inserita non esiste");
+    		txtMatricola.clear();
+    		return;
+    	}
+    	List <Corso> corsi = model.getCorsiOfStudenti(matricola);
+    	if(corsi.size() == 0) {
+    		txtRisultato.setText("lo studente non è iscritto a nessun corso");
+    		txtMatricola.clear();
+    		return;
+    	}
+    	
+    	for(Corso c : corsi) {
+    		txtRisultato.appendText(c.Descriviti()+ "\n");
+    	}
     }
 
     @FXML
